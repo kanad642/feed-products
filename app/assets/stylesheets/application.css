@@ -13,3 +13,24 @@
  *= require_tree .
  *= require_self
  */
+
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bgimg {
+  background-image: url('data-entr.gif');
+  height: 100%;
+  background-size: cover;
+  position: relative;
+  color: black;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 25px;
+}
+
+
+hr {
+  margin: auto;
+  width: 40%;
+}

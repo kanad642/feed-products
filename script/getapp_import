@@ -4,34 +4,35 @@ require 'rest_client'
 require 'json'
 require 'yaml'
 require 'ap'
+require 'csv'
 
-# getapp_import 50c1d711d2b584d7  capterra         capterra.yaml          development
-#                  [0] apy-key    [1]-source       [2]-file-path        [3]-environment
+# getapp_import 50c1d711d2b584d7    capterra.yaml          development
+#                  [0] apy-key      [1]-file-path        [2]-environment
 
 URLS = {
     "development" => "http://localhost:3000/api_v1",
-    "production"  => "https://feed-products.heroku-app.com/api_v1"
+    "production"  => "https://feed-products.herokuapp.com/api_v1"
 }
 
-# Get Source name like capterra or softwareadvice etc ....
 
-if ARGV[1].nil?
-  print "Source is not Given \n"
-  exit -1
-end
 
 #Get environment if not given consider development
 
-url = if ARGV[3] && URLS.keys.include?(ARGV[3].downcase)
-  URLS[ARGV[3].downcase]
+url = if ARGV[2] && URLS.keys.include?(ARGV[2].downcase)
+  URLS[ARGV[2].downcase]
 else
   URLS["development"]
 end
 
-# Get local file
 
-content = if ARGV[2]
-            IO.read(ARGV[2])
+# Get File EXT [Not in use but we can use to get file ext and white list file exts]
+# file_ext = /^[\w,\s-]+\.yml|yaml|json/.match(ARGV[1])
+# file_ext = file_ext.to_s.downcase
+
+
+# Get local file
+content = if ARGV[1]
+            IO.read(ARGV[1])
           else
             print "No File has been given"
             exit -1
@@ -43,13 +44,12 @@ site = RestClient::Resource.new(url)
 # Post the data, print the response.
 data = {
   "api_key" => ARGV[0],
-  "data_contant"     => content
+  "data_contant"  => content
 }
 
-puts "================ data = #{data}, ==============   site = #{site}"
 
 # Post the data, print the response.
 
-# site["process"].post data.to_json, content_type: :json do |response, request, result, &block|
-#   print "#{response}\n"
-# end
+site["process"].post data.to_json, content_type: :json do |response, request, result, &block|
+  print "#{response}\n"
+end
