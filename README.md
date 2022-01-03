@@ -35,7 +35,13 @@
 
 
 
- * To execute this command you will need local application setup because i am going to process this feed import on server side through sidekiq [Background job].
-   - getapp_import 50c1d711d2b584d7  capterra.yaml  development
+ * To execute this command you will need local application setup
+    - script/getapp_import 50c1d711d2b584d7  public/capterra.yaml  development
+
+* In case want to call remote server you can use
+  - script/getapp_import 50c1d711d2b584d7  public/capterra.yaml  production
+
+ * i am planing to process this feed import on server side through sidekiq [Background job].
+  in as response i have sent only filr data but later on a notification will be send based on requirements.
 
 
