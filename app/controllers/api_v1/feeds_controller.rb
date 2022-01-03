@@ -14,7 +14,7 @@ class ApiV1::FeedsController < ApplicationController
 
     api_key        = params[:api_key]
     data_contant   = params[:data_contant]
-    feed_file_url  = param[:file_path] if Rails.env.production?
+    feed_file_url  = params[:file_path] if Rails.env.production?
 
 
     # In case if we have Partner data in data base
